@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1CD3DA75-2EBD-4E84-87FA-F3C4DD2DF369}</ProjectGuid>
+    <ProjectGuid>{DF1FBF08-E90A-4EE2-A673-86C728D418FD}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>pizzeria</RootNamespace>
-    <AssemblyName>pizzeria</AssemblyName>
+    <RootNamespace>WindowsFormsApp1</RootNamespace>
+    <AssemblyName>WindowsFormsApp1</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
