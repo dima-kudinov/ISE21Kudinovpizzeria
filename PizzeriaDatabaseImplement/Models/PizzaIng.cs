@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+
+namespace PizzeriaDatabaseImplement.Models
+{
+    public class PizzaIng
+    {
+        public int Id { get; set; }
+        public int PizzaId { get; set; }
+        public int IngredientId { get; set; }
+        [Required]
+        public int Count { get; set; }
+        public virtual Ingredient Ingredient { get; set; }
+        public virtual Pizza Pizza { get; set; }
+    }
+}
