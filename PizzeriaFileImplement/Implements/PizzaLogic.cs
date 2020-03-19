@@ -48,7 +48,10 @@ namespace PizzeriaFileImplement.Implements
 
             int maxPCId = source.PizzaIng.Count > 0 ? source.PizzaIng.Max(rec => rec.Id) : 0;
 
-            foreach (var pc in model.PizzaIng) { source.PizzaIng.Add(new PizzaIng { Id = ++maxPCId, PizzaId = element.Id, IngredientId = pc.Key, Count = pc.Value.Item2 }); }
+            foreach (var pc in model.PizzaIng) { source.PizzaIng.Add(new PizzaIng { Id = ++maxPCId,
+                PizzaId = element.Id,
+                IngredientId = pc.Key,
+                Count = pc.Value.Item2 }); }
         }
 
         public void Delete(PizzaBindingModel model)
@@ -68,7 +71,8 @@ namespace PizzeriaFileImplement.Implements
             public List<PizzaViewModel> Read(PizzaBindingModel model) {
                 return source.Pizzas.Where(rec => model == null || rec.Id == model.Id).Select(rec => new PizzaViewModel
                 {
-                    Id = rec.Id, PizzaName = rec.PizzaName,
+                    Id = rec.Id,
+                    PizzaName = rec.PizzaName,
                     Price = rec.Price,
                     PizzaIng = source.PizzaIng.Where(recPC => recPC.PizzaId == rec.Id).ToDictionary(recPC => recPC.IngredientId, recPC => (source.Ingredients.FirstOrDefault(recC => recC.Id == recPC.IngredientId)?.IngredientName, recPC.Count)) }).
                     ToList();

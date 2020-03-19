@@ -183,11 +183,11 @@ namespace PizzeriaFileImplement
             {
                 var xElement = new XElement("Pizzas");
 
-                foreach (var pizza in Pizzas)
+                foreach (var Pizza in Pizzas)
                 {
-                    xElement.Add(new XElement("Pizza", new XAttribute("Id", pizza.Id),
-                        new XElement("PizzaName", pizza.PizzaName),
-                        new XElement("Price", pizza.Price)));
+                    xElement.Add(new XElement("Pizza", new XAttribute("Id", Pizza.Id),
+                        new XElement("PizzaName", Pizza.PizzaName),
+                        new XElement("Price", Pizza.Price)));
                 }
 
                 XDocument xDocument = new XDocument(xElement); xDocument.Save(PizzaFileName);
@@ -200,12 +200,12 @@ namespace PizzeriaFileImplement
             {
                 var xElement = new XElement("PizzaIng");
 
-                foreach (var pizzaIng in PizzaIng)
+                foreach (var PizzaIng in PizzaIng)
                 {
-                    xElement.Add(new XElement("PizzaIng", new XAttribute("Id", pizzaIng.Id),
-                        new XElement("PizzaId", pizzaIng.PizzaId),
-                        new XElement("IngredientId", pizzaIng.IngredientId),
-                        new XElement("Count", pizzaIng.Count)));
+                    xElement.Add(new XElement("PizzaIng", new XAttribute("Id", PizzaIng.Id),
+                        new XElement("PizzaId", PizzaIng.PizzaId),
+                        new XElement("IngredientId", PizzaIng.IngredientId),
+                        new XElement("Count", PizzaIng.Count)));
                 }
 
                 XDocument xDocument = new XDocument(xElement); xDocument.Save(PizzaIngFileName);

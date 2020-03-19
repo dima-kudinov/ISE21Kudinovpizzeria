@@ -11,7 +11,7 @@ namespace PizzeriaDatabaseImplement.Models
 
         public int PizzaId { get; set; }
 
-        public int CIngredientId { get; set; }
+        public int IngredientId { get; set; }
 
         [Required]
         public int Count { get; set; }

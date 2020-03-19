@@ -7,10 +7,10 @@ namespace PizzeriaDatabaseImplement.Models
     public class Ingredient
     {
         public int Id { get; set; }
-
         [Required]
         public string IngredientName { get; set; }
 
-        [ForeignKey("IngredientId")] public virtual List<PizzaIng> PizzaIng { get; set; }
+        [ForeignKey("IngredientId")]
+        public virtual List<PizzaIng> PizzaIng { get; set; }
     }
 }
