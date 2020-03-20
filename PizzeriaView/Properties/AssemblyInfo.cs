@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("pizzeria")]
+[assembly: AssemblyTitle("PizzeriaView")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("pizzeria")]
+[assembly: AssemblyProduct("PizzeriaView")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("1cd3da75-2ebd-4e84-87fa-f3c4dd2df369")]
+[assembly: Guid("19cb75a3-083e-4e10-b0cc-13a58a730a99")]
 
 // Сведения о версии сборки состоят из следующих четырех значений:
 //
