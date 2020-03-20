@@ -63,11 +63,6 @@ namespace PizzeriaView
         {
             DialogResult = DialogResult.Cancel;
             Close();
-        }
-
-        private void comboBoxIngredient_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
+        }        
     }
 }
