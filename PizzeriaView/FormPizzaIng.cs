@@ -65,9 +65,5 @@ namespace PizzeriaView
             Close();
         }
 
-        private void comboBoxIngredient_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
