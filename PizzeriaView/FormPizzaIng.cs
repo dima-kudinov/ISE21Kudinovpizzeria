@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PizzeriaBusinessLogic.Interfaces;
 using PizzeriaBusinessLogic.ViewModels;
-using Unity;
+using Unity;
+
 
 namespace PizzeriaView
 {
@@ -64,6 +65,5 @@ namespace PizzeriaView
             DialogResult = DialogResult.Cancel;
             Close();
         }
-
     }
 }
