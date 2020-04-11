@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PizzeriaBusinessLogic.ViewModels
 {
-   public class ReportOrdersViewMode
+   public class ReportOrdersViewModel
     {
         public DateTime DateCreate { get; set; }
 

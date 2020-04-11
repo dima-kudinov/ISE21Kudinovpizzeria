@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PizzeriaBusinessLogic.ViewModels
+namespace PizzeriaBusinessLogic.BindingModels
 {
     public class ReportBindingModel
     {

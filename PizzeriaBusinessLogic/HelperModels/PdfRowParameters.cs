@@ -1,6 +1,8 @@
-﻿using MigraDoc.DocumentObjectModel;
+﻿using System;
+using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
-using System.Collections.Generic
+using System.Collections.Generic;
+using System.Text;
 
 namespace PizzeriaBusinessLogic.HelperModels
 {

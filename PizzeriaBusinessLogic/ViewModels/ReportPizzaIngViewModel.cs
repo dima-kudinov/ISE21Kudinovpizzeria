@@ -6,10 +6,8 @@ namespace PizzeriaBusinessLogic.ViewModels
 {
    public class ReportPizzaIngViewModel
     {
+        public string PizzaName { get; set; }
         public string IngredientName { get; set; }
-
-        public int TotalCount { get; set; }
-
-        public List<Tuple<string, int>> Pizzas { get; set; }
+        public int Count { get; set; }
     }
 }

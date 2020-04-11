@@ -1,4 +1,6 @@
-﻿using PizzeriaBusinessLogic.BindingModels;
+﻿using Pizzeria;
+using PizzeriaBusinessLogic;
+using PizzeriaBusinessLogic.BindingModels;
 using PizzeriaBusinessLogic.BusinessLogics;
 using PizzeriaBusinessLogic.Interfaces;
 using System;
@@ -20,10 +22,12 @@ namespace PizzeriaView
         public new IUnityContainer Container { get; set; }
         private readonly MainLogic logic;
         private readonly IOrderLogic orderLogic;
+        private readonly ReportLogic report;
         public FormMain(MainLogic logic, IOrderLogic orderLogic)
         {
             InitializeComponent();
             this.logic = logic;
+            this.report = report;
             this.orderLogic = orderLogic;
         }
         private void FormMain_Load(object sender, EventArgs e)
@@ -122,6 +126,32 @@ namespace PizzeriaView
         private void buttonRef_Click(object sender, EventArgs e)
         {
             LoadData();
+        }
+        private void cписокИнгредиентовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    report.SavePizzasToWordFile(new ReportBindingModel
+                    {
+                        FileName =
+                   dialog.FileName
+                    });
+                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                   MessageBoxIcon.Information);
+                }
+            }
+        }
+        private void списокЗаказовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportOrders>();
+            form.ShowDialog();
+        }
+        private void пиццыПоИнгредиентамToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportPizzaIngs>();
+            form.ShowDialog();
         }
     }
 }
