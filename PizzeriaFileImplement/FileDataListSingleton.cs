@@ -21,26 +21,41 @@ namespace PizzeriaFileImplement
 
         private readonly string PizzaIngFileName = "PizzaIng.xml";
 
+        private readonly string StorageFileName = "Storage.xml";
+        private readonly string StorageIngredientFileName = "StorageIngredient.xml";
+
         public List<Ingredient> Ingredients { get; set; }
 
         public List<Order> Orders { get; set; }
 
         public List<Pizza> Pizzas { get; set; }
 
-        public List<PizzaIng> PizzaIng { get; set; }
+        public List<PizzaIng> PizzaIngs { get; set; }
 
-        private FileDataListSingleton() { Ingredients = LoadIngredients(); Orders = LoadOrders(); Pizzas = LoadPizzas(); PizzaIng = LoadPizzaIng(); }
-
+        public List<Storage> Storages { get; set; }
+        public List<StorageIngredient> StorageIngredients { get; set; }
+        private FileDataListSingleton()
+        {
+            Ingredients = LoadIngredients();
+            Orders = LoadOrders();
+            Pizzas = LoadPizzas();
+            PizzaIngs = LoadPizzaIngs();
+            Storages = LoadStorages();
+            StorageIngredients = LoadStorageIngredients();
+        }
         public static FileDataListSingleton GetInstance()
         {
-            if (instance == null) { instance = new FileDataListSingleton(); }
-
+            if (instance == null)
+            {
+                instance = new FileDataListSingleton();
+            }
             return instance;
         }
 
         ~FileDataListSingleton()
         {
-            SaveIngredients(); SaveOrders(); SavePizzas(); SavePizzaIng();
+            SaveIngredients(); SaveOrders(); SavePizzas(); SavePizzaIngs(); SaveStorages();
+            SaveStorageIngredients();
         }
 
         private List<Ingredient> LoadIngredients()
@@ -114,7 +129,26 @@ namespace PizzeriaFileImplement
             return list;
         }
 
-        private List<PizzaIng> LoadPizzaIng()
+        private List<Storage> LoadStorages()
+        {
+            var list = new List<Storage>();
+            if (File.Exists(StorageFileName))
+            {
+                XDocument xDocument = XDocument.Load(StorageFileName);
+                var xElements = xDocument.Root.Elements("Storage").ToList();
+                foreach (var elem in xElements)
+                {
+                    list.Add(new Storage
+                    {
+                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        StorageName = elem.Element("StorageName").Value
+                    });
+                }
+            }
+            return list;
+        }
+
+        private List<PizzaIng> LoadPizzaIngs()
         {
             var list = new List<PizzaIng>();
 
@@ -136,6 +170,27 @@ namespace PizzeriaFileImplement
                 }
             }
 
+            return list;
+        }
+
+        private List<StorageIngredient> LoadStorageIngredients()
+        {
+            var list = new List<StorageIngredient>();
+            if (File.Exists(StorageIngredientFileName))
+            {
+                XDocument xDocument = XDocument.Load(StorageIngredientFileName);
+                var xElements = xDocument.Root.Elements("StorageIngredient").ToList();
+                foreach (var elem in xElements)
+                {
+                    list.Add(new StorageIngredient
+                    {
+                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        StorageId = Convert.ToInt32(elem.Element("StorageId").Value),
+                        IngredientId = Convert.ToInt32(elem.Element("IngredientId").Value),
+                        Count = Convert.ToInt32(elem.Element("Count").Value)
+                    });
+                }
+            }
             return list;
         }
 
@@ -194,21 +249,54 @@ namespace PizzeriaFileImplement
             }
         }
 
-        private void SavePizzaIng()
+        private void SaveStorages()
         {
-            if (PizzaIng != null)
+            if (Storages != null)
+            {
+                var xElement = new XElement("Storages");
+                foreach (var Storage in Storages)
+                {
+                    xElement.Add(new XElement("Storage",
+                    new XAttribute("Id", Storage.Id),
+                    new XElement("StorageName", Storage.StorageName)));
+                }
+                XDocument xDocument = new XDocument(xElement);
+                xDocument.Save(StorageFileName);
+            }
+        }
+
+        private void SavePizzaIngs()
+        {
+            if (PizzaIngs != null)
             {
                 var xElement = new XElement("PizzaIng");
 
-                foreach (var pizzaIng in PizzaIng)
+                foreach (var PizzaIng in PizzaIngs)
                 {
-                    xElement.Add(new XElement("PizzaIng", new XAttribute("Id", pizzaIng.Id),
-                        new XElement("PizzaId", pizzaIng.PizzaId),
-                        new XElement("IngredientId", pizzaIng.IngredientId),
-                        new XElement("Count", pizzaIng.Count)));
+                    xElement.Add(new XElement("PizzaIng", new XAttribute("Id", PizzaIng.Id),
+                        new XElement("PizzaId", PizzaIng.PizzaId),
+                        new XElement("IngredientId", PizzaIng.IngredientId),
+                        new XElement("Count", PizzaIng.Count)));
                 }
 
                 XDocument xDocument = new XDocument(xElement); xDocument.Save(PizzaIngFileName);
+            }
+        }
+        private void SaveStorageIngredients()
+        {
+            if (StorageIngredients != null)
+            {
+                var xElement = new XElement("StorageIngredients");
+                foreach (var StorageIngredient in StorageIngredients)
+                {
+                    xElement.Add(new XElement("StorageIngredient",
+                    new XAttribute("Id", StorageIngredient.Id),
+                    new XElement("StorageId", StorageIngredient.StorageId),
+                    new XElement("IngredientId", StorageIngredient.IngredientId),
+                    new XElement("Count", StorageIngredient.Count)));
+                }
+                XDocument xDocument = new XDocument(xElement);
+                xDocument.Save(StorageIngredientFileName);
             }
         }
     }

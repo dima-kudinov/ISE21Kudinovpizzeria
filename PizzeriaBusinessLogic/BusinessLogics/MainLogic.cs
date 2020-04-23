@@ -10,9 +10,11 @@ namespace PizzeriaBusinessLogic.BusinessLogics
     public class MainLogic
     {
         private readonly IOrderLogic orderLogic;
-        public MainLogic(IOrderLogic orderLogic)
+        private readonly IStorageLogic storageLogic;
+        public MainLogic(IOrderLogic orderLogic, IStorageLogic storageLogic)
         {
             this.orderLogic = orderLogic;
+            this.storageLogic = storageLogic;
         }
         public void CreateOrder(CreateOrderBindingModel model)
         {
@@ -39,6 +41,11 @@ namespace PizzeriaBusinessLogic.BusinessLogics
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
             }
+            Console.WriteLine($"Take order with id {order.Id} and pizza id {order.PizzaId}");
+            if (!storageLogic.CheckIngredientsAvailability(order.PizzaId, order.Count))
+            {
+                throw new Exception("На складах не хватает ингредиентов");
+            }
             orderLogic.CreateOrUpdate(new OrderBindingModel
             {
                 Id = order.Id,
@@ -49,6 +56,7 @@ namespace PizzeriaBusinessLogic.BusinessLogics
                 DateImplement = DateTime.Now,
                 Status = OrderStatus.Выполняется
             });
+            storageLogic.RemoveFromStorage(order.PizzaId, order.Count);
         }
         public void FinishOrder(ChangeStatusBindingModel model)
         {
@@ -100,6 +108,10 @@ namespace PizzeriaBusinessLogic.BusinessLogics
                 Status = OrderStatus.Оплачен
             });
         }
+    }
+    public void FillStorage(StorageIngredientBindingModel model)
+    {
+        storageLogic.FillStorage(model);
     }
 }
 
