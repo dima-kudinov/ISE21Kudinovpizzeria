@@ -20,7 +20,7 @@ namespace PizzeriaView
         public int Id { set { id = value; } }
         private readonly IPizzaLogic logic;
         private int? id;
-        private Dictionary<int, (string, int)> PizzaIng;
+        private Dictionary<int, (string, int)> PizzaIngs;
         public FormPizza(IPizzaLogic service)
         {
             InitializeComponent();
@@ -40,7 +40,7 @@ namespace PizzeriaView
                     {
                         textBoxName.Text = view.PizzaName;
                         textBoxPrice.Text = view.Price.ToString();
-                        PizzaIng = view.PizzaIng;
+                        PizzaIngs = view.PizzaIngs;
                         LoadData();
                     }
                 }
@@ -52,17 +52,17 @@ namespace PizzeriaView
             }
             else
             {
-                PizzaIng = new Dictionary<int, (string, int)>();
+                PizzaIngs = new Dictionary<int, (string, int)>();
             }
         }
         private void LoadData()
         {
             try
             {
-                if (PizzaIng != null)
+                if (PizzaIngs != null)
                 {
                     dataGridView.Rows.Clear();
-                    foreach (var bf in PizzaIng)
+                    foreach (var bf in PizzaIngs)
                     {
                         dataGridView.Rows.Add(new object[] { bf.Key, bf.Value.Item1, bf.Value.Item2 });
                     }
@@ -79,13 +79,13 @@ namespace PizzeriaView
             var form = Container.Resolve<FormPizzaIng>();
             if (form.ShowDialog() == DialogResult.OK)
             {
-                if (PizzaIng.ContainsKey(form.Id))
+                if (PizzaIngs.ContainsKey(form.Id))
                 {
-                    PizzaIng[form.Id] = (form.IngredientName, form.Count);
+                    PizzaIngs[form.Id] = (form.IngredientName, form.Count);
                 }
                 else
                 {
-                    PizzaIng.Add(form.Id, (form.IngredientName, form.Count));
+                    PizzaIngs.Add(form.Id, (form.IngredientName, form.Count));
                 }
                 LoadData();
             }
@@ -97,10 +97,10 @@ namespace PizzeriaView
                 var form = Container.Resolve<FormPizzaIng>();
                 int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 form.Id = id;
-                form.Count = PizzaIng[id].Item2;
+                form.Count = PizzaIngs[id].Item2;
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    PizzaIng[form.Id] = (form.IngredientName, form.Count);
+                    PizzaIngs[form.Id] = (form.IngredientName, form.Count);
                     LoadData();
                 }
             }
@@ -114,7 +114,7 @@ namespace PizzeriaView
                 {
                     try
                     {
-                        PizzaIng.Remove(Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value));
+                        PizzaIngs.Remove(Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value));
                     }
                     catch (Exception ex)
                     {
@@ -143,7 +143,7 @@ namespace PizzeriaView
                MessageBoxIcon.Error);
                 return;
             }
-            if (PizzaIng == null || PizzaIng.Count == 0)
+            if (PizzaIngs == null || PizzaIngs.Count == 0)
             {
                 MessageBox.Show("Заполните компоненты", "Ошибка", MessageBoxButtons.OK,
                MessageBoxIcon.Error);
@@ -156,7 +156,7 @@ namespace PizzeriaView
                     Id = id,
                     PizzaName = textBoxName.Text,
                     Price = Convert.ToDecimal(textBoxPrice.Text),
-                    PizzaIng = PizzaIng
+                    PizzaIngs = PizzaIngs
                 });
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение",
                MessageBoxButtons.OK, MessageBoxIcon.Information);
