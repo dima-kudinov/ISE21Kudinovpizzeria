@@ -53,7 +53,7 @@ namespace PizzeriaView
                     PizzaViewModel Pizza = logicB.Read(new PizzaBindingModel
                     { Id = id })?[0];
                     int count = Convert.ToInt32(textBoxCount.Text);
-                    textBoxSum.Text = (count * Pizza.Price).ToString();
+                    textBoxSum.Text = (count * Pizza?.Price).ToString();
                 }
                 catch (Exception ex)
                 {

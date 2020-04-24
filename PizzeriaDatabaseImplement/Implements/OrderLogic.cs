@@ -46,6 +46,7 @@ namespace PizzeriaDatabaseImplement.Implements
             {
                 Order element = context.Orders.FirstOrDefault(rec => rec.Id ==
                model.Id);
+
                 if (element != null)
                 {
                     context.Orders.Remove(element);
@@ -79,3 +80,4 @@ namespace PizzeriaDatabaseImplement.Implements
         }
     }
 }
+
