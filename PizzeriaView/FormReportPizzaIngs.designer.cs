@@ -36,7 +36,6 @@
             // buttonMake
             // 
             this.buttonMake.Location = new System.Drawing.Point(17, 7);
-            this.buttonMake.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonMake.Name = "buttonMake";
             this.buttonMake.Size = new System.Drawing.Size(156, 25);
             this.buttonMake.TabIndex = 4;
@@ -47,7 +46,6 @@
             // buttonToPdf
             // 
             this.buttonToPdf.Location = new System.Drawing.Point(203, 7);
-            this.buttonToPdf.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonToPdf.Name = "buttonToPdf";
             this.buttonToPdf.Size = new System.Drawing.Size(192, 25);
             this.buttonToPdf.TabIndex = 5;
@@ -57,9 +55,8 @@
             // 
             // reportViewer
             // 
-            this.reportViewer.LocalReport.ReportEmbeddedResource = "Pizzeria.Report.rdlc";
+            this.reportViewer.LocalReport.ReportEmbeddedResource = "PizzeriaView.Report.rdlc";
             this.reportViewer.Location = new System.Drawing.Point(17, 39);
-            this.reportViewer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.reportViewer.Name = "reportViewer";
             this.reportViewer.ServerReport.BearerToken = null;
             this.reportViewer.Size = new System.Drawing.Size(874, 375);
@@ -73,9 +70,9 @@
             this.Controls.Add(this.reportViewer);
             this.Controls.Add(this.buttonToPdf);
             this.Controls.Add(this.buttonMake);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FormReportPizzaIngs";
             this.Text = "Отчет по пицце с ингредиентами";
+            this.Load += new System.EventHandler(this.FormReportPizzaIngs_Load);
             this.ResumeLayout(false);
 
         }

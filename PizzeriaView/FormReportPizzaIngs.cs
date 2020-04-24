@@ -29,7 +29,7 @@ namespace Pizzeria
             try
             {             
                 var dataSource = logic.GetPizzaIng();
-                ReportDataSource source = new ReportDataSource("DataSetPizzaIng", dataSource);
+                ReportDataSource source = new ReportDataSource("DataSetOrder", dataSource);
                 reportViewer.LocalReport.DataSources.Add(source);
                 reportViewer.RefreshReport();
             }
@@ -59,6 +59,11 @@ namespace Pizzeria
                     }
                 }
             }
-        }        
+        }
+
+        private void FormReportPizzaIngs_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

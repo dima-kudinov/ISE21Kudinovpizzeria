@@ -27,43 +27,38 @@ namespace PizzeriaBusinessLogic.BusinessLogics
         /// <returns></returns>
         public List<ReportPizzaIngViewModel> GetPizzaIng()
         {
-            var Ingredients = IngredientLogic.Read(null);
+           // var Ingredients = IngredientLogic.Read(null);
             var Pizzas = PizzaLogic.Read(null);
             var list = new List<ReportPizzaIngViewModel>();
-            foreach (var ingredient in Ingredients)
+            foreach (var pizza in Pizzas)
             {
-                foreach (var pizza in Pizzas)
+                foreach (var pi in pizza.PizzaIngs)
                 {
-                    if (pizza.PizzaIngs.ContainsKey(ingredient.Id))
+                    var record = new ReportPizzaIngViewModel
                     {
-                        var record = new ReportPizzaIngViewModel
-                        {
-                            PizzaName = pizza.PizzaName,
-                            IngredientName = ingredient.IngredientName,
-                            Count = pizza.PizzaIngs[ingredient.Id].Item2
-                        };
-                        list.Add(record);
-                    }
+                        PizzaName = pizza.PizzaName,
+                        IngredientName = pi.Value.Item1,
+                        Count = pi.Value.Item2
+                    };
+                    list.Add(record);
                 }
+                
             }
             return list;
         }
-        public List<ReportOrdersViewModel> GetOrders(ReportBindingModel model)
+        public List<IGrouping<DateTime, OrderViewModel>> GetOrders(ReportBindingModel model)
         {
-            return orderLogic.Read(new OrderBindingModel
+            var list = orderLogic
+            .Read(new OrderBindingModel
             {
                 DateFrom = model.DateFrom,
                 DateTo = model.DateTo
             })
-            .Select(x => new ReportOrdersViewModel
-            {
-                DateCreate = x.DateCreate,
-                PizzaName = x.PizzaName,
-                Count = x.Count,
-                Sum = x.Sum,
-                Status = x.Status
-            })
+            .GroupBy(rec => rec.DateCreate.Date)
+            .OrderBy(recG => recG.Key)
             .ToList();
+
+            return list;
         }
         /// <summary>
         /// Сохранение компонент в файл-Word
@@ -86,8 +81,6 @@ namespace PizzeriaBusinessLogic.BusinessLogics
         {
             SaveToExcel.CreateDoc(new ExcelInfo
             {
-                DateFrom = model.DateFrom.Value,
-                DateTo = model.DateTo.Value,
                 FileName = model.FileName,
                 Title = "Список заказов",
                 Orders = GetOrders(model)

@@ -23,7 +23,7 @@ namespace PizzeriaView
         private readonly MainLogic logic;
         private readonly IOrderLogic orderLogic;
         private readonly ReportLogic report;
-        public FormMain(MainLogic logic, IOrderLogic orderLogic)
+        public FormMain(MainLogic logic, IOrderLogic orderLogic, ReportLogic report)
         {
             InitializeComponent();
             this.logic = logic;

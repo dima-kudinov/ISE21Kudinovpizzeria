@@ -29,20 +29,20 @@ namespace PizzeriaBusinessLogic.BusinessLogics
             CreateRow(new PdfRowParameters
             {
                 Table = table,
-                Texts = new List<string> { "Пицца", "Игредиент", "Количество" },
+                Texts = new List<string> { "Закуска", "Продукт", "Количество" },
                 Style = "NormalTitle",
                 ParagraphAlignment = ParagraphAlignment.Center
             });
-            foreach (var sf in info.PizzaIngs)
+            foreach (var pi in info.PizzaIngs)
             {
                 CreateRow(new PdfRowParameters
                 {
                     Table = table,
                     Texts = new List<string>
                     {
-                        sf.PizzaName,
-                        sf.IngredientName,
-                        sf.Count.ToString()
+                        pi.PizzaName,
+                        pi.IngredientName,
+                        pi.Count.ToString()
                     },
                     Style = "Normal",
                     ParagraphAlignment = ParagraphAlignment.Left
