@@ -27,7 +27,7 @@ namespace PizzeriaDatabaseImplement.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PizzaName = table.Column<string>(nullable: false),
-                    Cost = table.Column<decimal>(nullable: false)
+                    Price = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,27 +59,26 @@ namespace PizzeriaDatabaseImplement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PizzaIng",
+                name: "PizzaIngs",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PizzaId = table.Column<int>(nullable: false),
-                    CIngredientId = table.Column<int>(nullable: false),
-                    Count = table.Column<int>(nullable: false),
-                    IngredientId = table.Column<int>(nullable: true)
+                    IngredientId = table.Column<int>(nullable: false),
+                    Count = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PizzaIng", x => x.Id);
+                    table.PrimaryKey("PK_PizzaIngs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PizzaIng_Ingredients_IngredientId",
+                        name: "FK_PizzaIngs_Ingredients_IngredientId",
                         column: x => x.IngredientId,
                         principalTable: "Ingredients",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PizzaIng_Pizzas_PizzaId",
+                        name: "FK_PizzaIngs_Pizzas_PizzaId",
                         column: x => x.PizzaId,
                         principalTable: "Pizzas",
                         principalColumn: "Id",
@@ -92,15 +91,14 @@ namespace PizzeriaDatabaseImplement.Migrations
                 column: "PizzaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PizzaIng_IngredientId",
-                table: "PizzaIng",
+                name: "IX_PizzaIngs_IngredientId",
+                table: "PizzaIngs",
                 column: "IngredientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PizzaIng_PizzaId",
-                table: "PizzaIng",
-                column: "PizzaId",
-                unique: true);
+                name: "IX_PizzaIngs_PizzaId",
+                table: "PizzaIngs",
+                column: "PizzaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -109,7 +107,7 @@ namespace PizzeriaDatabaseImplement.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "PizzaIng");
+                name: "PizzaIngs");
 
             migrationBuilder.DropTable(
                 name: "Ingredients");

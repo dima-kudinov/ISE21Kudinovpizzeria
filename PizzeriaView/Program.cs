@@ -24,13 +24,17 @@ namespace PizzeriaView
         private static IUnityContainer BuildUnityContainer()
         {
             var currentContainer = new UnityContainer();
-            currentContainer.RegisterType<IIngredientLogic, IngredientLogic>(new
-           HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IIngredientLogic, IngredientLogic>(new 
+                HierarchicalLifetimeManager());
             currentContainer.RegisterType<IOrderLogic, OrderLogic>(new
-HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IPizzaLogic, PizzaLogic>(new
-           HierarchicalLifetimeManager());
-            currentContainer.RegisterType<MainLogic>(new HierarchicalLifetimeManager());
+                HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IPizzaLogic, PizzaLogic>(new 
+                HierarchicalLifetimeManager());
+            currentContainer.RegisterType<MainLogic>(new
+                HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ReportLogic>(new 
+                HierarchicalLifetimeManager());
+
             return currentContainer;
         }
     }

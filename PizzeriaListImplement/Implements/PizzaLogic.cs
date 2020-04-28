@@ -49,11 +49,11 @@ namespace PizzeriaListImplement.Implements
         public void Delete(PizzaBindingModel model)
         {
             // удаляем записи по компонентам при удалении изделия
-            for (int i = 0; i < source.PizzaIng.Count; ++i)
+            for (int i = 0; i < source.PizzaIngs.Count; ++i)
             {
-                if (source.PizzaIng[i].PizzaId == model.Id)
+                if (source.PizzaIngs[i].PizzaId == model.Id)
                 {
-                    source.PizzaIng.RemoveAt(i--);
+                    source.PizzaIngs.RemoveAt(i--);
                 }
             }
             for (int i = 0; i < source.Pizzas.Count; ++i)
@@ -72,36 +72,36 @@ namespace PizzeriaListImplement.Implements
             Pizza.Price = model.Price;
             //обновляем существуюущие компоненты и ищем максимальный идентификатор
             int maxPCId = 0;
-            for (int i = 0; i < source.PizzaIng.Count; ++i)
+            for (int i = 0; i < source.PizzaIngs.Count; ++i)
             {
-                if (source.PizzaIng[i].Id > maxPCId)
+                if (source.PizzaIngs[i].Id > maxPCId)
                 {
-                    maxPCId = source.PizzaIng[i].Id;
+                    maxPCId = source.PizzaIngs[i].Id;
                 }
-                if (source.PizzaIng[i].PizzaId == Pizza.Id)
+                if (source.PizzaIngs[i].PizzaId == Pizza.Id)
                 {
                     // если в модели пришла запись компонента с таким id
                     if
-                    (model.PizzaIng.ContainsKey(source.PizzaIng[i].IngredientId))
+                    (model.PizzaIngs.ContainsKey(source.PizzaIngs[i].IngredientId))
                     {
                         // обновляем количество
-                        source.PizzaIng[i].Count =
-                        model.PizzaIng[source.PizzaIng[i].IngredientId].Item2;
+                        source.PizzaIngs[i].Count =
+                        model.PizzaIngs[source.PizzaIngs[i].IngredientId].Item2;
                         // из модели убираем эту запись, чтобы остались только не просмотренные
 
 
-                        model.PizzaIng.Remove(source.PizzaIng[i].IngredientId);
+                        model.PizzaIngs.Remove(source.PizzaIngs[i].IngredientId);
                     }
                     else
                     {
-                        source.PizzaIng.RemoveAt(i--);
+                        source.PizzaIngs.RemoveAt(i--);
                     }
                 }
             }
             // новые записи
-            foreach (var pc in model.PizzaIng)
+            foreach (var pc in model.PizzaIngs)
             {
-                source.PizzaIng.Add(new PizzaIng
+                source.PizzaIngs.Add(new PizzaIng
                 {
                     Id = ++maxPCId,
                     PizzaId = Pizza.Id,
@@ -131,9 +131,9 @@ namespace PizzeriaListImplement.Implements
         }
         private PizzaViewModel CreateViewModel(Pizza Pizza)
         {
-            Dictionary<int, (string, int)> PizzaIng = new Dictionary<int,
+            Dictionary<int, (string, int)> PizzaIngs = new Dictionary<int,
     (string, int)>();
-            foreach (var pc in source.PizzaIng)
+            foreach (var pc in source.PizzaIngs)
             {
                 if (pc.PizzaId == Pizza.Id)
                 {
@@ -146,7 +146,7 @@ namespace PizzeriaListImplement.Implements
                             break;
                         }
                     }
-                    PizzaIng.Add(pc.IngredientId, (IngredientName, pc.Count));
+                    PizzaIngs.Add(pc.IngredientId, (IngredientName, pc.Count));
                 }
             }
             return new PizzaViewModel
@@ -154,7 +154,7 @@ namespace PizzeriaListImplement.Implements
                 Id = Pizza.Id,
                 PizzaName = Pizza.PizzaName,
                 Price = Pizza.Price,
-                PizzaIng = PizzaIng
+                PizzaIngs = PizzaIngs
             };
         }
     }

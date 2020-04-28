@@ -45,7 +45,8 @@ namespace PizzeriaDatabaseImplement.Implements
             using (var context = new PizzeriaDatabase())
             {
                 Order element = context.Orders.FirstOrDefault(rec => rec.Id ==
-model.Id);
+               model.Id);
+
                 if (element != null)
                 {
                     context.Orders.Remove(element);
@@ -57,17 +58,17 @@ model.Id);
                 }
             }
         }
+
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
             using (var context = new PizzeriaDatabase())
             {
-                return context.Orders
-            .Include(rec => rec.Equipment)
-            .Where(rec => model == null || rec.Id == model.Id)
-            .Select(rec => new OrderViewModel
-            {
+                return context.Orders.Where(rec => model == null || (rec.Id == model.Id && model.Id.HasValue)
+                || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo))
+                .Select(rec => new OrderViewModel
+                {
                 Id = rec.Id,
-                PizzaName = rec.Equipment.PizzaName,
+                PizzaName = rec.Pizza.PizzaName,
                 Count = rec.Count,
                 Sum = rec.Sum,
                 Status = rec.Status,
@@ -79,3 +80,4 @@ model.Id);
         }
     }
 }
+

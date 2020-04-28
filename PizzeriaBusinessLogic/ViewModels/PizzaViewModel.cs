@@ -12,6 +12,6 @@ namespace PizzeriaBusinessLogic.ViewModels
         public string PizzaName { get; set; }
         [DisplayName("Цена")]
         public decimal Price { get; set; }
-        public Dictionary<int, (string, int)> PizzaIng { get; set; }
+        public Dictionary<int, (string, int)> PizzaIngs { get; set; }
     }
 }

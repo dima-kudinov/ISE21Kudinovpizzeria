@@ -10,7 +10,7 @@ using PizzeriaDatabaseImplement;
 namespace PizzeriaDatabaseImplement.Migrations
 {
     [DbContext(typeof(PizzeriaDatabase))]
-    [Migration("20200306065300_InitialCreate")]
+    [Migration("20200319192937_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,12 +76,12 @@ namespace PizzeriaDatabaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Cost")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("PizzaName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -95,13 +95,10 @@ namespace PizzeriaDatabaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CIngredientId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IngredientId")
+                    b.Property<int>("IngredientId")
                         .HasColumnType("int");
 
                     b.Property<int>("PizzaId")
@@ -111,16 +108,15 @@ namespace PizzeriaDatabaseImplement.Migrations
 
                     b.HasIndex("IngredientId");
 
-                    b.HasIndex("PizzaId")
-                        .IsUnique();
+                    b.HasIndex("PizzaId");
 
-                    b.ToTable("PizzaIng");
+                    b.ToTable("PizzaIngs");
                 });
 
             modelBuilder.Entity("PizzeriaDatabaseImplement.Models.Order", b =>
                 {
-                    b.HasOne("PizzeriaDatabaseImplement.Models.Pizza", "Equipment")
-                        .WithMany("Orders")
+                    b.HasOne("PizzeriaDatabaseImplement.Models.Pizza", "Pizza")
+                        .WithMany()
                         .HasForeignKey("PizzaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -129,12 +125,14 @@ namespace PizzeriaDatabaseImplement.Migrations
             modelBuilder.Entity("PizzeriaDatabaseImplement.Models.PizzaIng", b =>
                 {
                     b.HasOne("PizzeriaDatabaseImplement.Models.Ingredient", "Ingredient")
-                        .WithMany("PizzaIng")
-                        .HasForeignKey("IngredientId");
+                        .WithMany("PizzaIngs")
+                        .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PizzeriaDatabaseImplement.Models.Pizza", "Pizza")
-                        .WithOne("PizzaIng")
-                        .HasForeignKey("PizzeriaDatabaseImplement.Models.PizzaIng", "PizzaId")
+                        .WithMany("PizzaIngs")
+                        .HasForeignKey("PizzaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
