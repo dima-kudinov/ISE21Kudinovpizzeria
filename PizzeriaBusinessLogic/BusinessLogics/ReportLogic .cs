@@ -26,8 +26,7 @@ namespace PizzeriaBusinessLogic.BusinessLogics
         /// </summary>
         /// <returns></returns>
         public List<ReportPizzaIngViewModel> GetPizzaIng()
-        {
-           // var Ingredients = IngredientLogic.Read(null);
+        {          
             var Pizzas = PizzaLogic.Read(null);
             var list = new List<ReportPizzaIngViewModel>();
             foreach (var pizza in Pizzas)

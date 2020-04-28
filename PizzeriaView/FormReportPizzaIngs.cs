@@ -60,10 +60,5 @@ namespace Pizzeria
                 }
             }
         }
-
-        private void FormReportPizzaIngs_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
