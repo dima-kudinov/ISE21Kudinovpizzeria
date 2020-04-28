@@ -45,6 +45,7 @@ namespace PizzeriaDatabaseImplement.Implements
             {
                 Ingredient element = context.Ingredients.FirstOrDefault(rec => rec.Id ==
                model.Id);
+
                 if (element != null)
                 {
                     context.Ingredients.Remove(element);
@@ -56,6 +57,7 @@ namespace PizzeriaDatabaseImplement.Implements
                 }
             }
         }
+
         public List<IngredientViewModel> Read(IngredientBindingModel model)
         {
             using (var context = new PizzeriaDatabase())
@@ -72,3 +74,4 @@ namespace PizzeriaDatabaseImplement.Implements
         }
     }
 }
+

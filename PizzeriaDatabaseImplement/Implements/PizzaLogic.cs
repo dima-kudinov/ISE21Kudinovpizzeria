@@ -22,6 +22,7 @@ namespace PizzeriaDatabaseImplement.Implements
                     {
                         Pizza element = context.Pizzas.FirstOrDefault(rec =>
                        rec.PizzaName == model.PizzaName && rec.Id != model.Id);
+
                         if (element != null)
                         {
                             throw new Exception("Уже есть изделие с таким названием");
@@ -65,6 +66,7 @@ namespace PizzeriaDatabaseImplement.Implements
                         foreach (var pc in model.PizzaIngs)
                         {
                             context.PizzaIngs.Add(new PizzaIng
+
                             {
                                 PizzaId = element.Id,
                                 IngredientId = pc.Key,
@@ -82,6 +84,7 @@ namespace PizzeriaDatabaseImplement.Implements
                 }
             }
         }
+
         public void Delete(PizzaBindingModel model)
         {
             using (var context = new PizzeriaDatabase())
@@ -90,6 +93,7 @@ namespace PizzeriaDatabaseImplement.Implements
                 {
                     try
                     {
+
                         // удаяем записи по компонентам при удалении изделия
                         context.PizzaIngs.RemoveRange(context.PizzaIngs.Where(rec =>
                         rec.PizzaId == model.Id));
@@ -114,6 +118,7 @@ namespace PizzeriaDatabaseImplement.Implements
                 }
             }
         }
+
         public List<PizzaViewModel> Read(PizzaBindingModel model)
         {
             using (var context = new PizzeriaDatabase())
