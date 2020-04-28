@@ -206,7 +206,7 @@ namespace PizzeriaFileImplement
                 var xElement = new XElement("PizzaIngs");
 
 
-                foreach (var pizzaIng in PizzaIngs)
+                foreach (var PizzaIng in PizzaIngs)
                 {
                     xElement.Add(new XElement("PizzaIng", new XAttribute("Id", PizzaIng.Id),
                         new XElement("PizzaId", PizzaIng.PizzaId),

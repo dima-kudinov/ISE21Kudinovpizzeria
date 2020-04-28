@@ -72,7 +72,6 @@
             this.Controls.Add(this.buttonMake);
             this.Name = "FormReportPizzaIngs";
             this.Text = "Отчет по пицце с ингредиентами";
-            this.Load += new System.EventHandler(this.FormReportPizzaIngs_Load);
             this.ResumeLayout(false);
 
         }
