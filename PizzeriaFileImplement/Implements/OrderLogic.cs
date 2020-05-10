@@ -36,6 +36,7 @@ namespace PizzeriaFileImplement.Implements
                 source.Orders.Add(element);
             }
             element.PizzaId = model.PizzaId == 0 ? element.PizzaId : model.PizzaId;
+            element.ClientId = model.ClientId == null ? element.ClientId : (int)model.ClientId;
             element.Count = model.Count;
             element.Sum = model.Sum;
             element.Status = model.Status;
@@ -62,7 +63,9 @@ namespace PizzeriaFileImplement.Implements
             .Select(rec => new OrderViewModel
             {
                 Id = rec.Id,
-                PizzaName = source.Pizzas.FirstOrDefault(x => x.Id == rec.PizzaId)?.PizzaName,
+                PizzaName = GetPizzaName(rec.PizzaId),
+                ClientId = rec.ClientId,
+                ClientFIO = source.Clients.FirstOrDefault(recC => recC.Id == rec.ClientId)?.ClientFIO,
                 Count = rec.Count,
                 Sum = rec.Sum,
                 Status = rec.Status,
@@ -70,6 +73,13 @@ namespace PizzeriaFileImplement.Implements
                 DateImplement = rec.DateImplement
             })
             .ToList();
+        }
+        private string GetPizzaName(int id)
+        {
+            string name = "";
+            var Pizza = source.Pizzas.FirstOrDefault(x => x.Id == id);
+            name = Pizza != null ? Pizza.PizzaName : "";
+            return name;
         }
     }
 }

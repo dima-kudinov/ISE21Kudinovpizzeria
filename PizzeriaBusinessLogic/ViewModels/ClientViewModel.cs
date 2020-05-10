@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Runtime.Serialization;
+using System.Text;
 
 namespace PizzeriaBusinessLogic.ViewModels
 {
     [DataContract]
-    public class PizzaViewModel
+    public class ClientViewModel
     {
         [DataMember]
         public int Id { get; set; }
         [DataMember]
-        [DisplayName("Название пиццы")]
-        public string PizzaName { get; set; }
+        [DisplayName("ФИО")]
+        public string ClientFIO { get; set; }
         [DataMember]
-        [DisplayName("Цена")]
-        public decimal Price { get; set; }
+        [DisplayName("Логин")]
+        public string Email { get; set; }
         [DataMember]
-        public Dictionary<int, (string, int)> PizzaIngs { get; set; }
+        [DisplayName("Пароль")]
+        public string Password { get; set; }
     }
 }

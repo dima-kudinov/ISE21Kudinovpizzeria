@@ -80,6 +80,7 @@ namespace PizzeriaListImplement.Implements
         private Order CreateModel(OrderBindingModel model, Order Order)
         {
             Order.PizzaId = model.PizzaId == 0 ? Order.PizzaId : model.PizzaId;
+            Order.ClientId = (int)model.ClientId;
             Order.Count = model.Count;
             Order.Sum = model.Sum;
             Order.Status = model.Status;
@@ -101,6 +102,7 @@ namespace PizzeriaListImplement.Implements
             return new OrderViewModel
             {
                 Id = Order.Id,
+                ClientId = Order.ClientId,
                 PizzaName = PizzaName,
                 Count = Order.Count,
                 Sum = Order.Sum,

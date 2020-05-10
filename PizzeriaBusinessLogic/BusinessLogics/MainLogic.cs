@@ -19,6 +19,7 @@ namespace PizzeriaBusinessLogic.BusinessLogics
             orderLogic.CreateOrUpdate(new OrderBindingModel
             {
                 PizzaId = model.PizzaId,
+                ClientId = model.ClientId,
                 Count = model.Count,
                 Sum = model.Sum,
                 DateCreate = DateTime.Now,
@@ -42,6 +43,7 @@ namespace PizzeriaBusinessLogic.BusinessLogics
             orderLogic.CreateOrUpdate(new OrderBindingModel
             {
                 Id = order.Id,
+                ClientId = order.ClientId,
                 PizzaId = order.PizzaId,
                 Count = order.Count,
                 Sum = order.Sum,
@@ -67,6 +69,7 @@ namespace PizzeriaBusinessLogic.BusinessLogics
             orderLogic.CreateOrUpdate(new OrderBindingModel
             {
                 Id = order.Id,
+                ClientId = order.ClientId,
                 PizzaId = order.PizzaId,
                 Count = order.Count,
                 Sum = order.Sum,
@@ -92,6 +95,7 @@ namespace PizzeriaBusinessLogic.BusinessLogics
             orderLogic.CreateOrUpdate(new OrderBindingModel
             {
                 Id = order.Id,
+                ClientId = order.ClientId,
                 PizzaId = order.PizzaId,
                 Count = order.Count,
                 Sum = order.Sum,

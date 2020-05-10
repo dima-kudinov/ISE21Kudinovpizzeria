@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzeriaFileImplement", "Pi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzeriaDatabaseImplement", "PizzeriaDatabaseImplement\PizzeriaDatabaseImplement.csproj", "{E58B189E-FB5D-480F-A380-83AF72D12258}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzeriaRestApi", "PizzeriaPestApi\PizzeriaRestApi.csproj", "{C63D22EA-6101-4225-9705-9CAE137DA1EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzeriaClientView", "PizzeriaClientView\PizzeriaClientView.csproj", "{01A1F7B7-2D82-450C-8AA6-156E0D7E8AC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{E58B189E-FB5D-480F-A380-83AF72D12258}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E58B189E-FB5D-480F-A380-83AF72D12258}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E58B189E-FB5D-480F-A380-83AF72D12258}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C63D22EA-6101-4225-9705-9CAE137DA1EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C63D22EA-6101-4225-9705-9CAE137DA1EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C63D22EA-6101-4225-9705-9CAE137DA1EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C63D22EA-6101-4225-9705-9CAE137DA1EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01A1F7B7-2D82-450C-8AA6-156E0D7E8AC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01A1F7B7-2D82-450C-8AA6-156E0D7E8AC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01A1F7B7-2D82-450C-8AA6-156E0D7E8AC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01A1F7B7-2D82-450C-8AA6-156E0D7E8AC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
