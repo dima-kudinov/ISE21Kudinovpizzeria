@@ -83,7 +83,6 @@
             this.comboBoxIngredient.Name = "comboBoxIngredient";
             this.comboBoxIngredient.Size = new System.Drawing.Size(319, 24);
             this.comboBoxIngredient.TabIndex = 8;
-            this.comboBoxIngredient.SelectedIndexChanged += new System.EventHandler(this.comboBoxIngredient_SelectedIndexChanged);
             // 
             // labelIngredient
             // 
