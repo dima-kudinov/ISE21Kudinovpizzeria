@@ -79,6 +79,7 @@ namespace PizzeriaDatabaseImplement.Implements
                 Status = rec.Status,
                 DateCreate = rec.DateCreate,
                 DateImplement = rec.DateImplement,
+                PizzaName = rec.Pizza.PizzaName,
                 ClientFIO = rec.Client.ClientFIO
                 })
             .ToList();
