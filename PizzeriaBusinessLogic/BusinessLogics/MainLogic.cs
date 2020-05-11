@@ -41,7 +41,7 @@ namespace PizzeriaBusinessLogic.BusinessLogics
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
             }
-            Console.WriteLine($"Take order with id {order.Id} and pizza id {order.PizzaId}");
+           
             if (!storageLogic.CheckIngredientsAvailability(order.PizzaId, order.Count))
             {
                 throw new Exception("На складах не хватает ингредиентов");
@@ -108,10 +108,10 @@ namespace PizzeriaBusinessLogic.BusinessLogics
                 Status = OrderStatus.Оплачен
             });
         }
-    }
-    public void FillStorage(StorageIngredientBindingModel model)
-    {
-        storageLogic.FillStorage(model);
-    }
+        public void FillStorage(StorageIngredientBindingModel model)
+        {
+            storageLogic.FillStorage(model);
+        }
+    }    
 }
 
