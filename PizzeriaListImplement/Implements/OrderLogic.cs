@@ -1,4 +1,5 @@
 ﻿using PizzeriaBusinessLogic.BindingModels;
+using PizzeriaBusinessLogic.Enums;
 using PizzeriaBusinessLogic.Interfaces;
 using PizzeriaBusinessLogic.ViewModels;
 using PizzeriaListImplement;
@@ -62,18 +63,21 @@ namespace PizzeriaListImplement.Implements
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
             List<OrderViewModel> result = new List<OrderViewModel>();
-            foreach (var Order in source.Orders)
+            foreach (var order in source.Orders)
             {
                 if (model != null)
                 {
-                    if (Order.Id == model.Id || (model.DateFrom.HasValue && model.DateTo.HasValue && Order.DateCreate >= model.DateFrom && Order.DateCreate <= model.DateTo))
+                    if (order.Id == model.Id || (model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo)
+                        || model.ClientId.HasValue && order.ClientId == model.ClientId
+                        || model.FreeOrders.HasValue && model.FreeOrders.Value
+                    || model.ImplementerId.HasValue && order.ImplementerId == model.ImplementerId && order.Status == OrderStatus.Выполняется)
                     {
-                        result.Add(CreateViewModel(Order));
+                        result.Add(CreateViewModel(order));
                         break;
                     }
                     continue;
                 }
-                result.Add(CreateViewModel(Order));
+                result.Add(CreateViewModel(order));
             }
             return result;
         }
@@ -81,6 +85,7 @@ namespace PizzeriaListImplement.Implements
         {
             Order.PizzaId = model.PizzaId == 0 ? Order.PizzaId : model.PizzaId;
             Order.ClientId = (int)model.ClientId;
+            Order.ImplementerId = model.ImplementerId;
             Order.Count = model.Count;
             Order.Sum = model.Sum;
             Order.Status = model.Status;

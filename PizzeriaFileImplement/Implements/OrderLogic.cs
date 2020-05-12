@@ -1,4 +1,5 @@
 ﻿using PizzeriaBusinessLogic.BindingModels;
+using PizzeriaBusinessLogic.Enums;
 using PizzeriaBusinessLogic.Interfaces;
 using PizzeriaBusinessLogic.ViewModels;
 using PizzeriaFileImplement;
@@ -37,6 +38,7 @@ namespace PizzeriaFileImplement.Implements
             }
             element.PizzaId = model.PizzaId == 0 ? element.PizzaId : model.PizzaId;
             element.ClientId = model.ClientId == null ? element.ClientId : (int)model.ClientId;
+            element.ImplementerId = model.ImplementerId;
             element.Count = model.Count;
             element.Sum = model.Sum;
             element.Status = model.Status;
@@ -59,13 +61,17 @@ namespace PizzeriaFileImplement.Implements
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
             return source.Orders
-            .Where(rec => model == null || rec.Id == model.Id || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo))
+            .Where(rec => model == null || rec.Id == model.Id || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
+            || (model.ClientId.HasValue && rec.ClientId == model.ClientId)
+            || model.FreeOrders.HasValue && model.FreeOrders.Value && !rec.ImplementerId.HasValue
+            || model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется)
             .Select(rec => new OrderViewModel
             {
                 Id = rec.Id,
                 PizzaName = GetPizzaName(rec.PizzaId),
                 ClientId = rec.ClientId,
                 ClientFIO = source.Clients.FirstOrDefault(recC => recC.Id == rec.ClientId)?.ClientFIO,
+                ImplementerFIO = source.Implementers.FirstOrDefault(recC => recC.Id == rec.ImplementerId)?.ImplementerFIO,
                 Count = rec.Count,
                 Sum = rec.Sum,
                 Status = rec.Status,

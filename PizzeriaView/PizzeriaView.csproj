@@ -204,6 +204,18 @@
     <Compile Include="FormClients.Designer.cs">
       <DependentUpon>FormClients.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormImplementer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormImplementer.Designer.cs">
+      <DependentUpon>FormImplementer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormImplementers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormImplementers.designer.cs">
+      <DependentUpon>FormImplementers.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPizza.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -263,6 +275,9 @@
     <Compile Include="SqlServerTypes\Loader.cs" />
     <EmbeddedResource Include="FormClients.resx">
       <DependentUpon>FormClients.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormImplementers.resx">
+      <DependentUpon>FormImplementers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPizza.resx">
       <DependentUpon>FormPizza.cs</DependentUpon>
