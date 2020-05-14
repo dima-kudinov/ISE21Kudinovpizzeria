@@ -20,7 +20,8 @@ namespace PizzeriaFileImplement
         private readonly string PizzaFileName = "Pizza.xml";
 
         private readonly string PizzaIngFileName = "PizzaIng.xml";
-
+        private readonly string StorageFileName = "Storage.xml";
+        private readonly string StorageIngredientFileName = "StorageIngredient.xml";
         public List<Ingredient> Ingredients { get; set; }
 
         public List<Order> Orders { get; set; }
@@ -28,6 +29,8 @@ namespace PizzeriaFileImplement
         public List<Pizza> Pizzas { get; set; }
 
         public List<PizzaIng> PizzaIngs { get; set; }
+        public List<Storage> Storages { set; get; }
+        public List<StorageIngredient> StorageIngredients { set; get; }
 
         private FileDataListSingleton()
         {

@@ -12,12 +12,16 @@ namespace PizzeriaListImplement
         public List<Order> Orders { get; set; }
         public List<Pizza> Pizzas { get; set; }
         public List<PizzaIng> PizzaIngs { get; set; }
+        public List<Storage> Storages { get; set; }
+        public List<StorageIngredient> StorageIngredients { get; set; }
         private DataListSingleton()
         {
             Ingredients = new List<Ingredient>();
             Orders = new List<Order>();
             Pizzas = new List<Pizza>();
             PizzaIngs = new List<PizzaIng>();
+            Storages = new List<Storage>();
+            StorageIngredients = new List<StorageIngredient>();
         }
         public static DataListSingleton GetInstance()
         {
