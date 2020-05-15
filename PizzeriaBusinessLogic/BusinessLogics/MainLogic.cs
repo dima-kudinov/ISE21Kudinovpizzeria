@@ -82,6 +82,8 @@ namespace PizzeriaBusinessLogic.BusinessLogics
                 PizzaId = order.PizzaId,
                 Count = order.Count,
                 Sum = order.Sum,
+
+
                 ImplementerId = order.ImplementerId,
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
