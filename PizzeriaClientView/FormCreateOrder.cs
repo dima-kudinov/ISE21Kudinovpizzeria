@@ -1,47 +1,30 @@
-﻿using PizzeriaBusinessLogic.BindingModels;
-using PizzeriaBusinessLogic.BusinessLogics;
-using PizzeriaBusinessLogic.Interfaces;
-using PizzeriaBusinessLogic.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using PizzeriaBusinessLogic.BindingModels;
+using PizzeriaBusinessLogic.ViewModels;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Unity;
 
-namespace PizzeriaView
+namespace PizzeriaClientView
 {
     public partial class FormCreateOrder : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-        private readonly IPizzaLogic logicB;
-        private readonly IClientLogic logicC;
-        private readonly MainLogic logicM;
-        public FormCreateOrder(IPizzaLogic logicB, IClientLogic logicC, MainLogic logicM)
+        public FormCreateOrder()
         {
             InitializeComponent();
-            this.logicB = logicB;
-            this.logicC = logicC;
-            this.logicM = logicM;
         }
         private void FormCreateOrder_Load(object sender, EventArgs e)
         {
             try
             {
-                var list = logicB.Read(null);
-                comboBoxPizza.DataSource = list;
                 comboBoxPizza.DisplayMember = "PizzaName";
                 comboBoxPizza.ValueMember = "Id";
-                var listC = logicC.Read(null);
-                comboBoxClient.DisplayMember = "ClientFIO";
-                comboBoxClient.ValueMember = "Id";
-                comboBoxClient.DataSource = listC;
-                comboBoxClient.SelectedItem = null;
+                comboBoxPizza.DataSource =
+               APIClient.GetRequest<List<PizzaViewModel>>("api/main/getPizzalist");
+                comboBoxPizza.SelectedItem = null;
             }
             catch (Exception ex)
             {
@@ -57,10 +40,10 @@ namespace PizzeriaView
                 try
                 {
                     int id = Convert.ToInt32(comboBoxPizza.SelectedValue);
-                    PizzaViewModel Pizza = logicB.Read(new PizzaBindingModel
-                    { Id = id })?[0];
+                    PizzaViewModel Pizza =
+APIClient.GetRequest<PizzaViewModel>($"api/main/getPizza?PizzaId={id}");
                     int count = Convert.ToInt32(textBoxCount.Text);
-                    textBoxSum.Text = (count * Pizza?.Price).ToString();
+                    textBoxSum.Text = (count * Pizza.Price).ToString();
                 }
                 catch (Exception ex)
                 {
@@ -69,16 +52,15 @@ namespace PizzeriaView
                 }
             }
         }
-
-        private void textBoxCount_TextChanged(object sender, EventArgs e)
+        private void TextBoxCount_TextChanged(object sender, EventArgs e)
         {
             CalcSum();
         }
-        private void comboBoxPizza_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBoxPizza_SelectedIndexChanged(object sender, EventArgs e)
         {
             CalcSum();
         }
-        private void buttonSave_Click(object sender, EventArgs e)
+        private void ButtonSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBoxCount.Text))
             {
@@ -94,15 +76,15 @@ namespace PizzeriaView
             }
             try
             {
-                logicM.CreateOrder(new CreateOrderBindingModel
+                APIClient.PostRequest("api/main/createorder", new CreateOrderBindingModel
                 {
+                    ClientId = Program.Client.Id,
                     PizzaId = Convert.ToInt32(comboBoxPizza.SelectedValue),
-                    ClientId = Convert.ToInt32(comboBoxClient.SelectedValue),
                     Count = Convert.ToInt32(textBoxCount.Text),
                     Sum = Convert.ToDecimal(textBoxSum.Text)
                 });
-                MessageBox.Show("Сохранение прошло успешно", "Сообщение",
-               MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Заказ создан", "Сообщение", MessageBoxButtons.OK,
+               MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;
                 Close();
             }
@@ -111,11 +93,6 @@ namespace PizzeriaView
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
                MessageBoxIcon.Error);
             }
-        }
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
         }
     }
 }
