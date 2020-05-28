@@ -4,6 +4,7 @@ using PizzeriaBusinessLogic.ViewModels;
 using PizzeriaListImplement.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PizzeriaListImplement.Implements
@@ -196,14 +197,39 @@ namespace PizzeriaListImplement.Implements
             }
         }
 
-        public bool CheckIngredientsAvailability(int pizzaId, int pizzasCount)
+        public bool CheckIngredientsAvailability(int PizzaId, int PizzasCount)
         {
-            throw new NotImplementedException();
+            bool result = true;
+            var PizzaIngs = source.PizzaIng.Where(x => x.PizzaId == PizzaId);
+            if (PizzaIngs.Count() == 0) return false;
+            foreach (var elem in PizzaIngs)
+            {
+                int count = 0;
+                var storageIngredients = source.StorageIngredients.FindAll(x => x.IngredientId == elem.IngredientId);
+                count = storageIngredients.Sum(x => x.Count);
+                if (count < elem.Count * PizzasCount)
+                    return false;
+            }
+            return result;
         }
 
-        public void RemoveFromStorage(int pizzaId, int pizzasCount)
+        public void RemoveFromStorage(int PizzaId, int PizzasCount)
         {
-            throw new NotImplementedException();
+            var PizzaIngs = source.PizzaIng.Where(x => x.PizzaId == PizzaId);
+            if (PizzaIngs.Count() == 0) return;
+            foreach (var elem in PizzaIngs)
+            {
+                int left = elem.Count * PizzasCount;
+                var storageIngredients = source.StorageIngredients.FindAll(x => x.IngredientId == elem.IngredientId);
+                foreach (var rec in storageIngredients)
+                {
+                    int toRemove = left > rec.Count ? rec.Count : left;
+                    rec.Count -= toRemove;
+                    left -= toRemove;
+                    if (left == 0) break;
+                }
+            }
+            return;
         }
     }
 }
