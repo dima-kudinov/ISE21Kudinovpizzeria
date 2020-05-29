@@ -1,4 +1,5 @@
 ﻿using System;
+using PizzeriaBusinessLogic.Attributes;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -7,17 +8,21 @@ using System.Runtime.Serialization;
 namespace PizzeriaBusinessLogic.ViewModels
 {
     [DataContract]
-    public class PizzaViewModel
+    public class PizzaViewModel : BaseViewModel
     {
+        [Column(title: "Название пиццы", gridViewAutoSize: GridViewAutoSize.Fill)]
         [DataMember]
-        public int Id { get; set; }
-        [DataMember]
-        [DisplayName("Название пиццы")]
         public string PizzaName { get; set; }
+        [Column(title: "Цена", width: 50)]
         [DataMember]
-        [DisplayName("Цена")]
         public decimal Price { get; set; }
         [DataMember]
         public Dictionary<int, (string, int)> PizzaIngs { get; set; }
+        public override List<string> Properties() => new List<string>
+        {
+            "Id",
+            "PizzaName",
+            "Price"
+        };
     }
 }

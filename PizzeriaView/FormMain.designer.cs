@@ -34,6 +34,7 @@
             this.пиццыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.клиеныToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.исполнителиToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.сообщенияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.списокИнгредиентовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.пиццыПоИнгредиентамToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,7 +47,7 @@
             this.buttonCreateOrder = new System.Windows.Forms.Button();
             this.buttonPayOrder = new System.Windows.Forms.Button();
             this.buttonRef = new System.Windows.Forms.Button();
-            this.сообщенияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.создатьBackUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -72,7 +73,8 @@
             this.пиццыToolStripMenuItem,
             this.клиеныToolStripMenuItem,
             this.исполнителиToolStripMenuItem1,
-            this.сообщенияToolStripMenuItem});
+            this.сообщенияToolStripMenuItem,
+            this.создатьBackUpToolStripMenuItem});
             this.Справочники.Name = "Справочники";
             this.Справочники.Size = new System.Drawing.Size(117, 24);
             this.Справочники.Text = "Справочники";
@@ -105,6 +107,13 @@
             this.исполнителиToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
             this.исполнителиToolStripMenuItem1.Text = "Исполнители";
             this.исполнителиToolStripMenuItem1.Click += new System.EventHandler(this.исполнителиToolStripMenuItem_Click);
+            // 
+            // сообщенияToolStripMenuItem
+            // 
+            this.сообщенияToolStripMenuItem.Name = "сообщенияToolStripMenuItem";
+            this.сообщенияToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.сообщенияToolStripMenuItem.Text = "Сообщения";
+            this.сообщенияToolStripMenuItem.Click += new System.EventHandler(this.сообщенияToolStripMenuItem_Click);
             // 
             // отчетыToolStripMenuItem
             // 
@@ -212,12 +221,12 @@
             this.buttonRef.UseVisualStyleBackColor = true;
             this.buttonRef.Click += new System.EventHandler(this.buttonRef_Click);
             // 
-            // сообщенияToolStripMenuItem
+            // создатьBackUpToolStripMenuItem
             // 
-            this.сообщенияToolStripMenuItem.Name = "сообщенияToolStripMenuItem";
-            this.сообщенияToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.сообщенияToolStripMenuItem.Text = "Сообщения";
-            this.сообщенияToolStripMenuItem.Click += new System.EventHandler(this.сообщенияToolStripMenuItem_Click);
+            this.создатьBackUpToolStripMenuItem.Name = "создатьBackUpToolStripMenuItem";
+            this.создатьBackUpToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.создатьBackUpToolStripMenuItem.Text = "Создать backUp";
+            this.создатьBackUpToolStripMenuItem.Click += new System.EventHandler(this.создатьБэкапToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -265,5 +274,6 @@
         private System.Windows.Forms.ToolStripMenuItem исполнителиToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem запускРаботToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem сообщенияToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem создатьBackUpToolStripMenuItem;
     }
 }
