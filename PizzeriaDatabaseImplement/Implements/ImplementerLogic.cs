@@ -15,8 +15,24 @@ namespace PizzeriaDatabaseImplement.Implements
         {
             using (var context = new PizzeriaDatabase())
             {
-                Implementer element = context.Implementers.FirstOrDefault(rec => rec.Id == model.Id);
-                if (element == null)
+                Implementer element = context.Implementers.FirstOrDefault(rec => rec.ImplementerFIO == model.ImplementerFIO && rec.Id != model.Id);
+                if (element != null)
+                {
+                    throw new Exception("Уже есть исполнитель с таким именем");
+                }
+                if (model.Id.HasValue)
+                {
+                    element = context.Implementers.FirstOrDefault(rec => rec.Id == model.Id);
+                    if (model.Id.HasValue)
+                    {
+                        if (element == null)
+                        {
+                            throw new Exception("Элемент не найден");
+                        }
+
+                    }
+                }
+                else
                 {
                     element = new Implementer();
                     context.Implementers.Add(element);
