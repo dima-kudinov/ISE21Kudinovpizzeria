@@ -40,7 +40,6 @@ namespace PizzeriaDatabaseImplement.Implements
                 element.ImplementerFIO = model.ImplementerFIO;
                 element.WorkingTime = model.WorkingTime;
                 element.PauseTime = model.PauseTime;
-
                 context.SaveChanges();
             }
         }
