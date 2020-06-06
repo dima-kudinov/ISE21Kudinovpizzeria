@@ -11,7 +11,7 @@ namespace PizzeriaBusinessLogic.BusinessLogics
     {
         private readonly IOrderLogic orderLogic;
         private readonly IStorageLogic storageLogic;
-        public MainLogic(IOrderLogic orderLogic)
+        public MainLogic(IOrderLogic orderLogic, IStorageLogic storageLogic)
         {
             this.orderLogic = orderLogic;
             this.storageLogic = storageLogic;
@@ -29,10 +29,7 @@ namespace PizzeriaBusinessLogic.BusinessLogics
         }
         public void TakeOrderInWork(ChangeStatusBindingModel model)
         {
-            var order = orderLogic.Read(new OrderBindingModel
-            {
-                Id = model.OrderId
-            })?[0];
+            var order = orderLogic.Read(new OrderBindingModel { Id = model.OrderId })?[0];
             if (order == null)
             {
                 throw new Exception("Не найден заказ");
@@ -46,7 +43,6 @@ namespace PizzeriaBusinessLogic.BusinessLogics
                 storageLogic.RemoveFromStorage(order.PizzaId, order.Count);
                 orderLogic.CreateOrUpdate(new OrderBindingModel
                 {
-
                     Id = order.Id,
                     PizzaId = order.PizzaId,
                     Count = order.Count,
@@ -55,7 +51,6 @@ namespace PizzeriaBusinessLogic.BusinessLogics
                     DateImplement = DateTime.Now,
                     Status = OrderStatus.Выполняется
                 });
-
             }
             catch (Exception ex)
             {

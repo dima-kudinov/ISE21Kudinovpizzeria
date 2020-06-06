@@ -141,7 +141,7 @@ namespace PizzeriaDatabaseImplement.Implements
                 }
                 context.SaveChanges();
             }
-        }
+        }      
         public void RemoveFromStorage(int pizzaId, int pizzasCount)
         {
             using (var context = new PizzeriaDatabase())

@@ -138,7 +138,6 @@ namespace PizzeriaListImplement.Implements
                 throw new Exception("Элемент не найден");
             }
             source.Storages[index].StorageName = model.StorageName;
-
         }
         public void DelElement(int id)
         {
@@ -159,7 +158,6 @@ namespace PizzeriaListImplement.Implements
             }
             throw new Exception("Элемент не найден");
         }
-
         public void FillStorage(StorageIngredientBindingModel model)
         {
             int foundItemIndex = -1;
@@ -196,7 +194,6 @@ namespace PizzeriaListImplement.Implements
                 });
             }
         }
-
         public bool CheckIngredientsAvailability(int PizzaId, int PizzasCount)
         {
             bool result = true;
@@ -205,7 +202,8 @@ namespace PizzeriaListImplement.Implements
             foreach (var elem in PizzaIngs)
             {
                 int count = 0;
-                count = source.StorageIngredients.FindAll(x => x.IngredientId == elem.IngredientId).Sum(x => x.Count);
+                var storageIngredients = source.StorageIngredients.FindAll(x => x.IngredientId == elem.IngredientId);
+                count = storageIngredients.Sum(x => x.Count);
                 if (count < elem.Count * PizzasCount)
                     return false;
             }
