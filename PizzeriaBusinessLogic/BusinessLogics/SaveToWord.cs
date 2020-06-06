@@ -27,18 +27,53 @@ namespace PizzeriaBusinessLogic.BusinessLogics
                         JustificationValues = JustificationValues.Center
                     }
                 }));
-                foreach (var pizza in info.Pizzas)
+                if (info.Pizzas != null)
                 {
-                    docBody.AppendChild(CreateParagraph(new WordParagraph
+                    foreach (var pizza in info.Pizzas)
                     {
-                        Texts = new List<string> { pizza.PizzaName, ":" + pizza.Price.ToString() },
-                        TextProperties = new WordParagraphProperties
+                        docBody.AppendChild(CreateParagraph(new WordParagraph
                         {
-                            Size = "24",
-                            JustificationValues = JustificationValues.Both,
-                            Bold = true,
-                        }
-                    }));
+                            Texts = new List<string> { pizza.PizzaName, ":" + pizza.Price.ToString() },
+                            TextProperties = new WordParagraphProperties
+                            {
+                                Size = "24",
+                                JustificationValues = JustificationValues.Both,
+                                Bold = true,
+                            }
+                        }));
+                    }
+                }
+                else if (info.Storages != null)
+                {
+                    Table table = new Table();
+                    TableProperties props = new TableProperties(
+                        new TableBorders(
+                            new TopBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 },
+                            new BottomBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 },
+                            new LeftBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 },
+                            new RightBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 },
+                            new InsideHorizontalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 },
+                            new InsideVerticalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 }
+                    ));
+                    table.AppendChild(props);
+                    foreach (var storages in info.Storages)
+                    {
+                        var tr = new TableRow();
+                        var tc = new TableCell();
+                        tc.Append(CreateParagraph(new WordParagraph
+                        {
+                            Texts = new List<string> { storages.StorageName },
+                            TextProperties = new WordParagraphProperties
+                            {
+                                Bold = false,
+                                Size = "24",
+                                JustificationValues = JustificationValues.Both
+                            }
+                        }));
+                        tr.AppendChild(tc);
+                        table.AppendChild(tr);
+                    }
+                    docBody.AppendChild(table);
                 }
                 docBody.AppendChild(CreateSectionProperties());
                 wordDocument.MainDocumentPart.Document.Save();

@@ -13,5 +13,6 @@ namespace PizzeriaBusinessLogic.HelperModels
         public string Title { get; set; }
 
         public List<PizzaViewModel> Pizzas { get; set; }
+        public List<StorageViewModel> Storages { get; set; }
     }
 }

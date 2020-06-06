@@ -62,6 +62,7 @@ namespace PizzeriaFileImplement.Implements
             .Select(rec => new OrderViewModel
             {
                 Id = rec.Id,
+                PizzaId = rec.PizzaId,
                 PizzaName = source.Pizzas.FirstOrDefault(x => x.Id == rec.PizzaId)?.PizzaName,
                 Count = rec.Count,
                 Sum = rec.Sum,

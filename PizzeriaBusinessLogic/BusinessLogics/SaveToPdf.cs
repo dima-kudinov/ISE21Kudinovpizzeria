@@ -26,23 +26,66 @@ namespace PizzeriaBusinessLogic.BusinessLogics
             {
                 table.AddColumn(elem);
             }
-            CreateRow(new PdfRowParameters
+            if (info.PizzaIngs != null)
             {
-                Table = table,
-                Texts = new List<string> { "Закуска", "Продукт", "Количество" },
-                Style = "NormalTitle",
-                ParagraphAlignment = ParagraphAlignment.Center
-            });
-            foreach (var pi in info.PizzaIngs)
+                CreateRow(new PdfRowParameters
+                {
+                    Table = table,
+                    Texts = new List<string> { "Закуска", "Продукт", "Количество" },
+                    Style = "NormalTitle",
+                    ParagraphAlignment = ParagraphAlignment.Center
+                });
+                foreach (var sf in info.PizzaIngs)
+                {
+                    CreateRow(new PdfRowParameters
+                    {
+                        Table = table,
+                        Texts = new List<string>
+                    {
+                        sf.PizzaName,
+                        sf.IngredientName,
+                        sf.Count.ToString()
+                    },
+                        Style = "Normal",
+                        ParagraphAlignment = ParagraphAlignment.Left
+                    });
+                }
+            }
+            else if (info.StorageIngredients != null)
             {
+                int sum = 0;
+                CreateRow(new PdfRowParameters
+                {
+                    Table = table,
+                    Texts = new List<string> { "Продукт", "Склад", "Количество" },
+                    Style = "NormalTitle",
+                    ParagraphAlignment = ParagraphAlignment.Center
+                });
+
+                foreach (var sf in info.StorageIngredients)
+                {
+                    CreateRow(new PdfRowParameters
+                    {
+                        Table = table,
+                        Texts = new List<string>
+                    {
+                        sf.IngredientName,
+                        sf.StorageName,
+                        sf.Count.ToString()
+                    },
+                        Style = "Normal",
+                        ParagraphAlignment = ParagraphAlignment.Left
+                    });
+                    sum += sf.Count;
+                }
                 CreateRow(new PdfRowParameters
                 {
                     Table = table,
                     Texts = new List<string>
                     {
-                        pi.PizzaName,
-                        pi.IngredientName,
-                        pi.Count.ToString()
+                        "Всего",
+                        "",
+                        sum.ToString()
                     },
                     Style = "Normal",
                     ParagraphAlignment = ParagraphAlignment.Left
@@ -50,6 +93,7 @@ namespace PizzeriaBusinessLogic.BusinessLogics
             }
             PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always)
             {
+               
                 Document = document
             };
             renderer.RenderDocument();
