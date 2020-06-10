@@ -16,5 +16,6 @@ namespace PizzeriaDatabaseImplement.Models
         [ForeignKey("PizzaId")]
 
         public virtual List<PizzaIng> PizzaIngs { get; set; }
+        public virtual List<Order> Orders { get; set; }
     }
 }
