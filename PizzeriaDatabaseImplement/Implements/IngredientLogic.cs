@@ -15,6 +15,7 @@ namespace PizzeriaDatabaseImplement.Implements
         {
             using (var context = new PizzeriaDatabase())
             {
+
                 Ingredient element = context.Ingredients.FirstOrDefault(rec =>
                rec.IngredientName == model.IngredientName && rec.Id != model.Id);
                 if (element != null)
