@@ -5,15 +5,14 @@ using System.Text;
 
 namespace PizzeriaDatabaseImplement.Models
 {
-    public class PizzaIng
+    public class StorageIngredient
     {
         public int Id { get; set; }
-        public int PizzaId { get; set; }
-
+        public int StorageId { get; set; }
         public int IngredientId { get; set; }
         [Required]
         public int Count { get; set; }
         public virtual Ingredient Ingredient { get; set; }
-        public virtual Pizza Pizza { get; set; }
+        public virtual Storage Storage { get; set; }
     }
 }

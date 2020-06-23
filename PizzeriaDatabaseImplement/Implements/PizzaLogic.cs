@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace PizzeriaDatabaseImplement.Implements
 {
@@ -19,15 +20,16 @@ namespace PizzeriaDatabaseImplement.Implements
                 {
                     try
                     {
-                        Pizza element = context.Pizzas.FirstOrDefault(rec => rec.PizzaName == model.PizzaName && rec.Id != model.Id);
+                        Pizza element = context.Pizzas.FirstOrDefault(rec =>
+                       rec.PizzaName == model.PizzaName && rec.Id != model.Id);
                         if (element != null)
                         {
                             throw new Exception("Уже есть изделие с таким названием");
                         }
-
                         if (model.Id.HasValue)
                         {
-                            element = context.Pizzas.FirstOrDefault(rec => rec.Id == model.Id);
+                            element = context.Pizzas.FirstOrDefault(rec => rec.Id ==
+                           model.Id);
                             if (element == null)
                             {
                                 throw new Exception("Элемент не найден");
@@ -35,30 +37,34 @@ namespace PizzeriaDatabaseImplement.Implements
                         }
                         else
                         {
-                            element = new Pizza(); context.Pizzas.Add(element);
+                            element = new Pizza();
+                            context.Pizzas.Add(element);
                         }
-
                         element.PizzaName = model.PizzaName;
                         element.Price = model.Price;
                         context.SaveChanges();
-
                         if (model.Id.HasValue)
                         {
-                            var PizzaIngs = context.PizzaIng.Where(rec => rec.PizzaId == model.Id.Value).ToList();                        
-                            // удалили те, которых нет в модели         
-                            context.PizzaIng.RemoveRange(PizzaIngs.Where(rec => !model.PizzaIng.ContainsKey(rec.IngredientId)).ToList());
+                            var PizzaIngs = context.PizzaIngs.Where(rec
+                           => rec.PizzaId == model.Id.Value).ToList();
+                            // удалили те, которых нет в модели
+                            context.PizzaIngs.RemoveRange(PizzaIngs.Where(rec =>
+                            !model.PizzaIngs.ContainsKey(rec.IngredientId)).ToList());
                             context.SaveChanges();
-                            // обновили количество у существующих записей     
+                            // обновили количество у существующих записей
                             foreach (var updateIngredient in PizzaIngs)
                             {
-                                updateIngredient.Count = model.PizzaIng[updateIngredient.IngredientId].Item2;
-                                model.PizzaIng.Remove(updateIngredient.IngredientId);
+                                updateIngredient.Count =
+                               model.PizzaIngs[updateIngredient.IngredientId].Item2;
+
+                                model.PizzaIngs.Remove(updateIngredient.IngredientId);
                             }
                             context.SaveChanges();
-                        }                         // добавили новые 
-                        foreach (var pc in model.PizzaIng)
+                        }
+                        // добавили новые
+                        foreach (var pc in model.PizzaIngs)
                         {
-                            context.PizzaIng.Add(new PizzaIng
+                            context.PizzaIngs.Add(new PizzaIng
                             {
                                 PizzaId = element.Id,
                                 IngredientId = pc.Key,
@@ -66,19 +72,16 @@ namespace PizzeriaDatabaseImplement.Implements
                             });
                             context.SaveChanges();
                         }
-
                         transaction.Commit();
                     }
-
                     catch (Exception)
-
                     {
-                        transaction.Rollback(); throw;
+                        transaction.Rollback();
+                        throw;
                     }
                 }
             }
         }
-
         public void Delete(PizzaBindingModel model)
         {
             using (var context = new PizzeriaDatabase())
@@ -87,39 +90,49 @@ namespace PizzeriaDatabaseImplement.Implements
                 {
                     try
                     {
-                        // удаяем записи по компонентам при удалении изделия         
-                        context.PizzaIng.RemoveRange(context.PizzaIng.Where(rec => rec.PizzaId == model.Id));
-                        Pizza element = context.Pizzas.FirstOrDefault(rec => rec.Id == model.Id);
+                        // удаяем записи по компонентам при удалении изделия
+                        context.PizzaIngs.RemoveRange(context.PizzaIngs.Where(rec =>
+                        rec.PizzaId == model.Id));
+                        Pizza element = context.Pizzas.FirstOrDefault(rec => rec.Id
+                       == model.Id);
                         if (element != null)
                         {
-                            context.Pizzas.Remove(element); context.SaveChanges();
+                            context.Pizzas.Remove(element);
+                            context.SaveChanges();
                         }
-                        else { throw new Exception("Элемент не найден"); }
+                        else
+                        {
+                            throw new Exception("Элемент не найден");
+                        }
                         transaction.Commit();
                     }
-                    catch (Exception) { transaction.Rollback(); throw; }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
                 }
             }
         }
-
         public List<PizzaViewModel> Read(PizzaBindingModel model)
         {
             using (var context = new PizzeriaDatabase())
             {
-                return context.Pizzas.
-                    Where(rec => model == null || rec.Id == model.Id)
-                    .ToList().Select(rec => new PizzaViewModel
-                {
-                    Id = rec.Id,
-                    PizzaName = rec.PizzaName,
-                    Price = rec.Price,
-                    PizzaIng = context.PizzaIng.
-                    Include(recPC => recPC.Ingredient).
-                    Where(recPC => recPC.PizzaId == rec.Id).
-                    ToDictionary(recPC => recPC.IngredientId, recPC =>
-                        (recPC.Ingredient?.IngredientName, recPC.Count))
-                })
-                .ToList();
+                return context.Pizzas
+                .Where(rec => model == null || rec.Id == model.Id)
+                .ToList()
+               .Select(rec => new PizzaViewModel
+               {
+                   Id = rec.Id,
+                   PizzaName = rec.PizzaName,
+                   Price = rec.Price,
+                   PizzaIngs = context.PizzaIngs
+                .Include(recPC => recPC.Ingredient)
+               .Where(recPC => recPC.PizzaId == rec.Id)
+               .ToDictionary(recPC => recPC.IngredientId, recPC =>
+                (recPC.Ingredient?.IngredientName, recPC.Count))
+               })
+               .ToList();
             }
         }
     }

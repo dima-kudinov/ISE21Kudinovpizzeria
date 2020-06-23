@@ -37,26 +37,23 @@ namespace PizzeriaFileImplement.Implements
             element.PizzaName = model.PizzaName;
             element.Price = model.Price;
 
-            source.PizzaIng.RemoveAll(rec => rec.PizzaId == model.Id && !model.PizzaIng.ContainsKey(rec.IngredientId));             // обновили количество у существующих записей        
-            var updateIngredients = source.PizzaIng.Where(rec => rec.PizzaId == model.Id && model.PizzaIng.ContainsKey(rec.IngredientId)); 
+            source.PizzaIngs.RemoveAll(rec => rec.PizzaId == model.Id && !model.PizzaIngs.ContainsKey(rec.IngredientId));             // обновили количество у существующих записей        
+            var updateIngredients = source.PizzaIngs.Where(rec => rec.PizzaId == model.Id && model.PizzaIngs.ContainsKey(rec.IngredientId)); 
 
             foreach (var updateIngredient in updateIngredients)
             {
-                updateIngredient.Count = model.PizzaIng[updateIngredient.IngredientId].Item2;
-                model.PizzaIng.Remove(updateIngredient.IngredientId);
+                updateIngredient.Count = model.PizzaIngs[updateIngredient.IngredientId].Item2;
+                model.PizzaIngs.Remove(updateIngredient.IngredientId);
             }
 
-            int maxPCId = source.PizzaIng.Count > 0 ? source.PizzaIng.Max(rec => rec.Id) : 0;
+            int maxPCId = source.PizzaIngs.Count > 0 ? source.PizzaIngs.Max(rec => rec.Id) : 0;
 
-            foreach (var pc in model.PizzaIng) { source.PizzaIng.Add(new PizzaIng { Id = ++maxPCId,
-                PizzaId = element.Id,
-                IngredientId = pc.Key,
-                Count = pc.Value.Item2 }); }
+            foreach (var pc in model.PizzaIngs) { source.PizzaIngs.Add(new PizzaIng { Id = ++maxPCId, PizzaId = element.Id, IngredientId = pc.Key, Count = pc.Value.Item2 }); }
         }
 
         public void Delete(PizzaBindingModel model)
         {             // удаяем записи по компонентам при удалении изделия           
-            source.PizzaIng.RemoveAll(rec => rec.PizzaId == model.Id);
+            source.PizzaIngs.RemoveAll(rec => rec.PizzaId == model.Id);
             Pizza element = source.Pizzas.FirstOrDefault(rec => rec.Id == model.Id);
             if (element != null)
             {
@@ -74,7 +71,7 @@ namespace PizzeriaFileImplement.Implements
                     Id = rec.Id,
                     PizzaName = rec.PizzaName,
                     Price = rec.Price,
-                    PizzaIng = source.PizzaIng.Where(recPC => recPC.PizzaId == rec.Id).ToDictionary(recPC => recPC.IngredientId, recPC => (source.Ingredients.FirstOrDefault(recC => recC.Id == recPC.IngredientId)?.IngredientName, recPC.Count)) }).
+                    PizzaIngs = source.PizzaIngs.Where(recPC => recPC.PizzaId == rec.Id).ToDictionary(recPC => recPC.IngredientId, recPC => (source.Ingredients.FirstOrDefault(recC => recC.Id == recPC.IngredientId)?.IngredientName, recPC.Count)) }).
                     ToList();
             }
         }

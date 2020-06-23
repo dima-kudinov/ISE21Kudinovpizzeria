@@ -10,9 +10,11 @@ namespace PizzeriaBusinessLogic.BusinessLogics
     public class MainLogic
     {
         private readonly IOrderLogic orderLogic;
-        public MainLogic(IOrderLogic orderLogic)
+        private readonly IStorageLogic storageLogic;
+        public MainLogic(IOrderLogic orderLogic, IStorageLogic storageLogic)
         {
             this.orderLogic = orderLogic;
+            this.storageLogic = storageLogic;
         }
         public void CreateOrder(CreateOrderBindingModel model)
         {
@@ -27,10 +29,7 @@ namespace PizzeriaBusinessLogic.BusinessLogics
         }
         public void TakeOrderInWork(ChangeStatusBindingModel model)
         {
-            var order = orderLogic.Read(new OrderBindingModel
-            {
-                Id = model.OrderId
-            })?[0];
+            var order = orderLogic.Read(new OrderBindingModel { Id = model.OrderId })?[0];
             if (order == null)
             {
                 throw new Exception("Не найден заказ");
@@ -39,16 +38,24 @@ namespace PizzeriaBusinessLogic.BusinessLogics
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
             }
-            orderLogic.CreateOrUpdate(new OrderBindingModel
+            try
             {
-                Id = order.Id,
-                PizzaId = order.PizzaId,
-                Count = order.Count,
-                Sum = order.Sum,
-                DateCreate = order.DateCreate,
-                DateImplement = DateTime.Now,
-                Status = OrderStatus.Выполняется
-            });
+                storageLogic.RemoveFromStorage(order.PizzaId, order.Count);
+                orderLogic.CreateOrUpdate(new OrderBindingModel
+                {
+                    Id = order.Id,
+                    PizzaId = order.PizzaId,
+                    Count = order.Count,
+                    Sum = order.Sum,
+                    DateCreate = order.DateCreate,
+                    DateImplement = DateTime.Now,
+                    Status = OrderStatus.Выполняется
+                });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public void FinishOrder(ChangeStatusBindingModel model)
         {
@@ -99,6 +106,10 @@ namespace PizzeriaBusinessLogic.BusinessLogics
                 DateImplement = order.DateImplement,
                 Status = OrderStatus.Оплачен
             });
+        }
+        public void FillStorage(StorageIngredientBindingModel model)
+        {
+            storageLogic.FillStorage(model);
         }
     }
 }

@@ -20,16 +20,24 @@ namespace PizzeriaFileImplement
         private readonly string PizzaFileName = "Pizza.xml";
 
         private readonly string PizzaIngFileName = "PizzaIng.xml";
-
+        private readonly string StorageFileName = "Storage.xml";
+        private readonly string StorageIngredientFileName = "StorageIngredient.xml";
         public List<Ingredient> Ingredients { get; set; }
 
         public List<Order> Orders { get; set; }
 
         public List<Pizza> Pizzas { get; set; }
 
-        public List<PizzaIng> PizzaIng { get; set; }
+        public List<PizzaIng> PizzaIngs { get; set; }
+        public List<Storage> Storages { set; get; }
+        public List<StorageIngredient> StorageIngredients { set; get; }
 
-        private FileDataListSingleton() { Ingredients = LoadIngredients(); Orders = LoadOrders(); Pizzas = LoadPizzas(); PizzaIng = LoadPizzaIng(); }
+        private FileDataListSingleton()
+        {
+            Ingredients = LoadIngredients();
+            Orders = LoadOrders();
+            Pizzas = LoadPizzas();
+            PizzaIngs = LoadPizzaIngs(); }
 
         public static FileDataListSingleton GetInstance()
         {
@@ -40,7 +48,7 @@ namespace PizzeriaFileImplement
 
         ~FileDataListSingleton()
         {
-            SaveIngredients(); SaveOrders(); SavePizzas(); SavePizzaIng();
+            SaveIngredients(); SaveOrders(); SavePizzas(); SavePizzaIngs();
         }
 
         private List<Ingredient> LoadIngredients()
@@ -114,7 +122,7 @@ namespace PizzeriaFileImplement
             return list;
         }
 
-        private List<PizzaIng> LoadPizzaIng()
+        private List<PizzaIng> LoadPizzaIngs()
         {
             var list = new List<PizzaIng>();
 
@@ -194,13 +202,13 @@ namespace PizzeriaFileImplement
             }
         }
 
-        private void SavePizzaIng()
+        private void SavePizzaIngs()
         {
-            if (PizzaIng != null)
+            if (PizzaIngs != null)
             {
-                var xElement = new XElement("PizzaIng");
+                var xElement = new XElement("PizzaIngs");
 
-                foreach (var PizzaIng in PizzaIng)
+                foreach (var pizzaIng in PizzaIngs)
                 {
                     xElement.Add(new XElement("PizzaIng", new XAttribute("Id", PizzaIng.Id),
                         new XElement("PizzaId", PizzaIng.PizzaId),

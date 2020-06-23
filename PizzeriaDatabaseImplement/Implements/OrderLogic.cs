@@ -45,7 +45,7 @@ namespace PizzeriaDatabaseImplement.Implements
             using (var context = new PizzeriaDatabase())
             {
                 Order element = context.Orders.FirstOrDefault(rec => rec.Id ==
-model.Id);
+               model.Id);
                 if (element != null)
                 {
                     context.Orders.Remove(element);
@@ -62,12 +62,13 @@ model.Id);
             using (var context = new PizzeriaDatabase())
             {
                 return context.Orders
-            .Include(rec => rec.Equipment)
+                .Include(rec => rec.Pizza)
             .Where(rec => model == null || rec.Id == model.Id)
             .Select(rec => new OrderViewModel
             {
                 Id = rec.Id,
-                PizzaName = rec.Equipment.PizzaName,
+                PizzaName = rec.Pizza.PizzaName,
+                PizzaId = rec.Pizza.Id,
                 Count = rec.Count,
                 Sum = rec.Sum,
                 Status = rec.Status,
