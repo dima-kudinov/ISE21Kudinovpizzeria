@@ -68,7 +68,8 @@ namespace PizzeriaFileImplement.Implements
             public List<PizzaViewModel> Read(PizzaBindingModel model) {
                 return source.Pizzas.Where(rec => model == null || rec.Id == model.Id).Select(rec => new PizzaViewModel
                 {
-                    Id = rec.Id, PizzaName = rec.PizzaName,
+                    Id = rec.Id,
+                    PizzaName = rec.PizzaName,
                     Price = rec.Price,
                     PizzaIngs = source.PizzaIngs.Where(recPC => recPC.PizzaId == rec.Id).ToDictionary(recPC => recPC.IngredientId, recPC => (source.Ingredients.FirstOrDefault(recC => recC.Id == recPC.IngredientId)?.IngredientName, recPC.Count)) }).
                     ToList();

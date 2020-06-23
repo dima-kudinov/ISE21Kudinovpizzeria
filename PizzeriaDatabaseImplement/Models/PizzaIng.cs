@@ -9,6 +9,7 @@ namespace PizzeriaDatabaseImplement.Models
     {
         public int Id { get; set; }
         public int PizzaId { get; set; }
+
         public int IngredientId { get; set; }
         [Required]
         public int Count { get; set; }
