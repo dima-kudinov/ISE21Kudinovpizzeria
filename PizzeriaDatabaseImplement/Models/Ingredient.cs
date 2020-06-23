@@ -13,5 +13,7 @@ namespace PizzeriaDatabaseImplement.Models
         public string IngredientName { get; set; }
         [ForeignKey("IngredientId")]
         public virtual List<PizzaIng> PizzaIngs { get; set; }
+        [ForeignKey("IngredientId")]
+        public virtual List<StorageIngredient> StorageIngredients { get; set; }
     }
 }

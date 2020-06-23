@@ -69,6 +69,7 @@ namespace PizzeriaDatabaseImplement.Implements
                 {
                 Id = rec.Id,
                 PizzaName = rec.Pizza.PizzaName,
+                PizzaId = rec.Pizza.Id,
                 Count = rec.Count,
                 Sum = rec.Sum,
                 Status = rec.Status,

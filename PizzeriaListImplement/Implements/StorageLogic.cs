@@ -202,8 +202,7 @@ namespace PizzeriaListImplement.Implements
             foreach (var elem in PizzaIngs)
             {
                 int count = 0;
-                var storageIngredients = source.StorageIngredients.FindAll(x => x.IngredientId == elem.IngredientId);
-                count = storageIngredients.Sum(x => x.Count);
+                count = source.StorageIngredients.FindAll(x => x.IngredientId == elem.IngredientId).Sum(x => x.Count);
                 if (count < elem.Count * PizzasCount)
                     return false;
             }
