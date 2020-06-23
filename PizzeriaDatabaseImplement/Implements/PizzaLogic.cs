@@ -49,15 +49,15 @@ namespace PizzeriaDatabaseImplement.Implements
                            => rec.PizzaId == model.Id.Value).ToList();
                             // удалили те, которых нет в модели
                             context.PizzaIngs.RemoveRange(PizzaIngs.Where(rec =>
-                            !model.PizzaIngs.ContainsKey(rec.PizzaId)).ToList());
+                            !model.PizzaIngs.ContainsKey(rec.IngredientId)).ToList());
                             context.SaveChanges();
                             // обновили количество у существующих записей
-                            foreach (var updatePizza in PizzaIngs)
+                            foreach (var updateIngredient in PizzaIngs)
                             {
-                                updatePizza.Count =
-                               model.PizzaIngs[updatePizza.PizzaId].Item2;
+                                updateIngredient.Count =
+                               model.PizzaIngs[updateIngredient.IngredientId].Item2;
 
-                                model.PizzaIngs.Remove(updatePizza.PizzaId);
+                                model.PizzaIngs.Remove(updateIngredient.IngredientId);
                             }
                             context.SaveChanges();
                         }
