@@ -74,7 +74,7 @@ namespace PizzeriaView
             // 
             // Column2
             // 
-            this.Column2.HeaderText = "Компонент";
+            this.Column2.HeaderText = "Ингредиент";
             this.Column2.Name = "Column2";
             // 
             // Column3

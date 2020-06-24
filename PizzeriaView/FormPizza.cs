@@ -145,7 +145,7 @@ namespace PizzeriaView
             }
             if (PizzaIngs == null || PizzaIngs.Count == 0)
             {
-                MessageBox.Show("Заполните компоненты", "Ошибка", MessageBoxButtons.OK,
+                MessageBox.Show("Заполните ингредиенты", "Ошибка", MessageBoxButtons.OK,
                MessageBoxIcon.Error);
                 return;
             }

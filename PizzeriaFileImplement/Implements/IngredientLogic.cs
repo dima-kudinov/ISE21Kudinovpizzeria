@@ -19,7 +19,7 @@ namespace PizzeriaFileImplement.Implements
             Ingredient element = source.Ingredients.FirstOrDefault(rec => rec.IngredientName == model.IngredientName && rec.Id != model.Id);
             if (element != null)
             {
-                throw new Exception("Уже есть компонент с таким названием");
+                throw new Exception("Уже есть ингредиент с таким названием");
             }
 
             if (model.Id.HasValue)
