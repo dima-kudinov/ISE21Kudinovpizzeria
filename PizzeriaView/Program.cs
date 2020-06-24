@@ -72,7 +72,6 @@ HierarchicalLifetimeManager());
             var type = typeof(T);
             if (type.BaseType == typeof(BaseViewModel))
             {
-                // создаем объект от типа
                 object obj = Activator.CreateInstance(type);
                 // вытаскиваем метод получения списка заголовков
                 var method = type.GetMethod("Properties");
