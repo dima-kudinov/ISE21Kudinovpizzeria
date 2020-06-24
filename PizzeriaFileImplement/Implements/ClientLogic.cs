@@ -22,7 +22,7 @@ namespace PizzeriaFileImplement.Implements
 
             if (element != null)
             {
-                throw new Exception("Уже есть компонент с таким названием");
+                throw new Exception("Уже есть ингредиент с таким названием");
             }
 
             if (model.Id.HasValue)
